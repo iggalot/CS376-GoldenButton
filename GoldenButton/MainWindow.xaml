@@ -4,9 +4,27 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoldenButton"
+        xmlns:views ="clr-namespace:GoldenButton.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <Border Margin="10" Background="White">
+        <Grid Background="Red">
+            <views:GBView x:Name="GBViewControl" Loaded="GBViewControl_Loaded" />
+
+
+            <!--<StackPanel Orientation="Vertical">
+                <Canvas 
+                    x:Name="GBCanvas"
+                    Margin="30"
+                    Width="400" 
+                    Height="300"
+                    Background="Azure"
+                    VerticalAlignment="Center"
+                    >
+                </Canvas>
+            </StackPanel>-->
+        </Grid>
+    </Border>
+
+
 </Window>

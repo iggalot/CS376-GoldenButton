@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="GoldenButton.Views.GBView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GoldenButton.Views"
+             xmlns:convert="clr-namespace:GoldenButton.ValueConverters"
+             xmlns:controls="clr-namespace:GoldenButton.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <convert:PointToCanvasPositionConverter x:Key="PointToCanvasPositionConverter"/>
+        <convert:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
+    </UserControl.Resources>
+    
+    <Grid>
+        <ItemsControl ItemsSource="{Binding Path=GBRegionsList}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas x:Name="GBViewCanvas" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" 
+                            Value="{Binding Converter={StaticResource PointToCanvasPositionConverter}, ConverterParameter='LEFT'}"/>
+                    <Setter Property="Canvas.Top"  
+                            Value="{Binding Converter={StaticResource PointToCanvasPositionConverter}, ConverterParameter='TOP'}"/>
+                   </Style>
+                </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Gamebord square -->
+                        <Rectangle Grid.Row="0" Width="40" Height="40" Fill="Green" Stroke="Black" StrokeThickness="1"/>
+
+                        <!-- Gamepiece in a game square-->
+                        <!--<Ellipse Grid.Row="0" Width="30" Height="30" Fill="{Binding Converter={StaticResource ColorToBrushConverter}}"/>-->
+                        <controls:GamePieceControl />
+
+
+                        <!-- Identifying text for the region number / name -->
+                        <TextBlock Grid.Row="1" Text="{Binding RegionName}" Foreground="Black"/>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+    </Grid>
+</UserControl>

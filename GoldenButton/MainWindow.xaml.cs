@@ -4,14 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace GoldenButton
 {
@@ -20,9 +12,37 @@ namespace GoldenButton
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Private Members
+
+        #endregion
+
+        #region Public Members
+        /// <summary>
+        /// Our gameboard viewmodel object
+        /// </summary>
+        public static GameboardViewModel GBViewModelObject { get; set; }
+        #endregion
+
+
+        #region Constructor
+        // constructor
         public MainWindow()
         {
             InitializeComponent();
         }
+        #endregion
+
+        #region Private Methods
+        private void GBViewControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            // create our gameboard view model object
+            GBViewModelObject = new GameboardViewModel();
+
+            // now create the gameboard to be used by the object.
+            GBViewModelObject.CreateGameboard(16);
+
+            GBViewControl.DataContext = GBViewModelObject;
+        }
+        #endregion
     }
 }
