@@ -11,7 +11,7 @@
         <Grid Background="Red">
             <views:GBView x:Name="GBViewControl" Loaded="GBViewControl_Loaded" />
 
-
+<!-- Testing GitConnections -- RESTART branch push -->
             <!--<StackPanel Orientation="Vertical">
                 <Canvas 
                     x:Name="GBCanvas"
