@@ -14,13 +14,17 @@ namespace GoldenButton
         REGION_HEX
     }
 
+    public enum RegionPieceTypes
+    {
+        REGION_PIECETYPE_NONE,
+        REGION_PIECETYPE_NORMAL,
+        REGION_PIECETYPE_GOLDEN
+    }
+
 
     // One of the gameboard regions (square, hex, etc)
     public class GBRegion
     {
-        #region Private Members
-
-        #endregion
 
         #region Public Members
         /// <summary>
@@ -32,6 +36,12 @@ namespace GoldenButton
         /// The shape of our gameplay region on the gameboard
         /// </summary>
         public RegionShapes RegionShape { get; set; }
+
+        /// <summary>
+        /// Holds the single value for the type of piece contained in the region.  Does not currently used the GBPiece class.
+        /// For console developement only at this point.
+        /// </summary>
+        public RegionPieceTypes RegionPieceType { get; set; }
 
         /// <summary>
         /// The width of our region / or primary dimension for non rectangle
@@ -90,12 +100,22 @@ namespace GoldenButton
             PieceTypes type;
             // create and add a piece to our list of regions
             if (index == 0)
+            {
+                RegionPieceType = RegionPieceTypes.REGION_PIECETYPE_GOLDEN;
                 type = PieceTypes.TYPE_GOLDEN;
-            else if (index == 1)
+            }
+            else if (index < 5)
+            {
+                RegionPieceType = RegionPieceTypes.REGION_PIECETYPE_NONE;
                 type = PieceTypes.TYPE_NONE;
+            }
             else
+            {
+                RegionPieceType = RegionPieceTypes.REGION_PIECETYPE_NORMAL;
                 type = PieceTypes.TYPE_NORMAL;
+            }
             
+            // Using the class
             Piece = new GBPiece(PieceOwners.OWNER_ALL, type);
         }
         #endregion

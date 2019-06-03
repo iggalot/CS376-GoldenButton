@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Diagnostics;
 
 namespace GoldenButton
 {
@@ -18,6 +19,11 @@ namespace GoldenButton
 
         #region Public Members
         /// <summary>
+        /// Our console based gameboard model object
+        /// </summary>
+        public static GBModel GameboardModel { get; set; }
+        
+        /// <summary>
         /// Our gameboard viewmodel object
         /// </summary>
         public static GameboardViewModel GBViewModelObject { get; set; }
@@ -29,12 +35,21 @@ namespace GoldenButton
         public MainWindow()
         {
             InitializeComponent();
+
+            Trace.WriteLine("================================ Starting Golden Button =========================================");
         }
         #endregion
 
         #region Private Methods
         private void GBViewControl_Loaded(object sender, RoutedEventArgs e)
         {
+            GameboardModel = new GBModel(24);
+            GameboardModel.DisplayBoard();
+
+
+
+
+
             // create our gameboard view model object
             GBViewModelObject = new GameboardViewModel();
 
