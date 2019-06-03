@@ -18,11 +18,16 @@ namespace GoldenButton
         #endregion
 
         #region Public Members
-        /// <summary>
-        /// Our console based gameboard model object
-        /// </summary>
-        public static GBModel GameboardModel { get; set; }
+        ///// <summary>
+        ///// Our console based gameboard model object
+        ///// </summary>
+        //public static GBModel GameboardModel { get; set; }
         
+        /// <summary>
+        /// The gamemanager for this game.
+        /// </summary>
+        public static GameManager gameManager { get; set; }
+
         /// <summary>
         /// Our gameboard viewmodel object
         /// </summary>
@@ -43,9 +48,12 @@ namespace GoldenButton
         #region Private Methods
         private void GBViewControl_Loaded(object sender, RoutedEventArgs e)
         {
-            GameboardModel = new GBModel(24);
-            GameboardModel.DisplayBoard();
+            gameManager = new GameManager();
 
+            for(int i = 0; i < 10; i++)
+            {
+                gameManager.NextPlayer();
+            }
 
 
 

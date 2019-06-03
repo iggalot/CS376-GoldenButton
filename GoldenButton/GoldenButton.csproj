@@ -59,6 +59,9 @@
     <Compile Include="Controls\GamePieceControl.xaml.cs">
       <DependentUpon>GamePieceControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\GameManager.cs" />
+    <Compile Include="Model\Player.cs" />
+    <Compile Include="Model\PlayerTurn.cs" />
     <Compile Include="ValueConverters\ColorToBrushConverter.cs" />
     <Compile Include="ValueConverters\PointToCanvasPositionConverter.cs" />
     <Compile Include="ViewModel\GameboardViewModel.cs" />
@@ -77,9 +80,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Model\GBModel.cs" />
-    <Compile Include="Model\GBPiece.cs" />
-    <Compile Include="Model\GBRegion.cs" />
+    <Compile Include="Model\Gameboard\GBModel.cs" />
+    <Compile Include="Model\Gameboard\GBPiece.cs" />
+    <Compile Include="Model\Gameboard\GBRegion.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
