@@ -74,7 +74,7 @@ namespace GoldenButton
                 gameboard[j] = temp;
             }
 
-            // Now make sure the gold button is in the rightmost 25%
+            // Now make sure the golden button is in the rightmost 25%
             for (int i = 0; i < mRegions; i++)
             {
                 // swap the gold button with a region in rightmost 25% of board
