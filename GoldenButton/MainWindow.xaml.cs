@@ -35,7 +35,7 @@ namespace GoldenButton
         #endregion
 
 
-        #region Constructor
+        #region Default Constructor
         // constructor
         public MainWindow()
         {
@@ -49,11 +49,12 @@ namespace GoldenButton
         private void GBViewControl_Loaded(object sender, RoutedEventArgs e)
         {
             gameManager = new GameManager();
+            gameManager.PlayGame();
 
-            for(int i = 0; i < 10; i++)
-            {
-                gameManager.NextPlayer();
-            }
+            //for(int i = 0; i < 10; i++)
+            //{
+            //    gameManager.NextPlayer();
+            //}
 
 
 
