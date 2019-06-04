@@ -84,10 +84,13 @@ namespace GoldenButton
                 {
                     // piece color is gold for the golden button
                     return Color.FromArgb(255, 255, 233, 0);
+                } else if (PieceType == PieceTypes.TYPE_NONE) {
+                    // all other "pieces" are white and fully transparent (so that they don't show up)
+                    return Color.FromArgb(0, 255, 255, 255); 
                 } else
                 {
-                    // all other "pieces" are white and fully transparent (so that they don't show up)
-                    return Color.FromArgb(0, 255, 255, 255);
+                    // Return a black color if we have an error
+                    return Color.FromArgb(255, 0, 0, 0);
                 }
             }
         }
