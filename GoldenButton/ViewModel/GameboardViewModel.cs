@@ -75,6 +75,11 @@ namespace GoldenButton
         public static double GBTileBorderThickness { get; } = (double)GBTileDiameter / 30.0;
 
         /// <summary>
+        /// The color for when a gamepiece is hovered over
+        /// </summary>
+        public static Color GBTileHoverColor { get; } = Color.Orange;
+
+        /// <summary>
         /// The gameboard object associated with this viewmodel
         /// </summary>
         public static GBModel GameboardModel { get; set;}
@@ -96,6 +101,15 @@ namespace GoldenButton
 
         #endregion
 
+        #region Commands
+
+        /// <summary>
+        /// Test command functionality...
+        /// </summary>
+        public static RelayCommand cmd1;
+
+        #endregion
+
         #region Default Constructor
         /// <summary>
         /// Defaukl constructor
@@ -105,6 +119,9 @@ namespace GoldenButton
         {
             // Set our gameboard object
             GameboardModel = game.Gameboard;
+
+            // Create our gameboard commands
+            var cmd1 = new RelayCommand(o => { MessageBox.Show("Command received and clicked"); }, o=> true);
         }
 
         #endregion

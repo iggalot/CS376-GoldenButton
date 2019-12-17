@@ -100,6 +100,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Controls\GamePieceControl.xaml.cs">
       <DependentUpon>GamePieceControl.xaml</DependentUpon>
     </Compile>

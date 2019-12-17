@@ -11,6 +11,9 @@ using System.Windows.Media;
 
 namespace GoldenButton.ValueConverters
 {
+    /// <summary>
+    /// An IValueConverter for taking a region index number and extracting the color of the piece that is contained within it.
+    /// </summary>
     class IndexToPieceColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -40,11 +43,6 @@ namespace GoldenButton.ValueConverters
             {
                 throw new NotImplementedException("IndexToPieceColorConverter received an invalid PieceType in Piece #" + ".");
             }
-
-
-
-    
-
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

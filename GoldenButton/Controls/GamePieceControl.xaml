@@ -15,12 +15,30 @@
 
         <!-- The template for our game piece -->
         <ControlTemplate x:Key="MyPieceTemplate" TargetType="UserControl">
-            <Grid>
-                <Ellipse
-                         Width="{Binding Source={x:Static local:GameboardViewModel.GBTileDiameter}}" 
-                         Height="{Binding Source={x:Static local:GameboardViewModel.GBTileDiameter}}" 
-                         Fill="{Binding Index, Converter={StaticResource IndexToPieceColorConverter}}"/>
-            </Grid>
+            <Button Name="MyButton" Click="MyButton_Click" Background="Transparent"
+                    BorderThickness="{Binding Source={x:Static local:GameboardViewModel.GBSquareBorderThickness}}"
+                    BorderBrush="{Binding Source={x:Static local:GameboardViewModel.GBSquareBorderColor}, Converter={StaticResource ColorToBrushConverter}}">
+                <StackPanel Orientation="Horizontal">
+                    <Ellipse
+                        Width="{Binding Source={x:Static local:GameboardViewModel.GBTileDiameter}}" 
+                        Height="{Binding Source={x:Static local:GameboardViewModel.GBTileDiameter}}" 
+                        >
+
+                        <!-- Add a hover over effect for our ellipse-->
+                        <Ellipse.Style>
+                            <Style TargetType="{x:Type Ellipse}">
+                                <Setter Property="Fill" Value="{Binding Index, Converter={StaticResource IndexToPieceColorConverter}}" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Fill" Value="{Binding Source={x:Static local:GameboardViewModel.GBTileHoverColor}, Converter={StaticResource ColorToBrushConverter}}" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Ellipse.Style>
+
+                    </Ellipse>
+                </StackPanel>
+            </Button>
         </ControlTemplate>
     </UserControl.Resources>
 

@@ -33,6 +33,10 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
                             <!-- Gameboard square -->
                             <Rectangle Grid.Row="0" 
                                        Width="{Binding Source={x:Static local:GameboardViewModel.GBSquareWidth}}"
@@ -43,7 +47,7 @@
                                 />
 
                             <!--Gamepiece in a game square -->
-                            <controls:GamePieceControl />
+                            <controls:GamePieceControl Grid.Row="0"/>
 
                             <!-- Identifying text for the region number / name -->                          
                             <TextBlock Grid.Row="1" Text="{Binding RegionName}" Foreground="Black"/>
