@@ -14,7 +14,7 @@ namespace GoldenButton
         /// <summary>
         /// Number of regions on the gameboard.  8 is the default.
         /// </summary>
-        int mRegions = 8;
+        public int mRegions = 8;
         #endregion
 
         #region Public Members
@@ -24,6 +24,8 @@ namespace GoldenButton
 
         #endregion
 
+        // The number of regions in our gameboard
+        public int NumRegions { get => mRegions; }
 
         #region Constructor
         public GBModel(int num)
@@ -36,6 +38,7 @@ namespace GoldenButton
 
             // Now shuffle the contents
             this.ShuffleGameboard(GBRegionsList);
+            this.DisplayBoard();
         }
         #endregion
 
@@ -55,6 +58,7 @@ namespace GoldenButton
                 regions.Add(new GBRegion(i));
             }
 
+            // Assign the nerwly created region
             GBRegionsList = regions;
         }
 
@@ -97,7 +101,7 @@ namespace GoldenButton
 
         #region Public Methods
         /// <summary>
-        /// Displays the current Gameboard state.
+        /// Displays the current Gameboard state as a string.
         /// </summary>
         public void DisplayBoard()
         {
@@ -131,10 +135,6 @@ namespace GoldenButton
         }
 
         #endregion
-
-
-
-
 
     }
 }

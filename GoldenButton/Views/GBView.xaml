@@ -3,54 +3,56 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:GoldenButton.Views"
+             xmlns:local="clr-namespace:GoldenButton"
              xmlns:convert="clr-namespace:GoldenButton.ValueConverters"
              xmlns:controls="clr-namespace:GoldenButton.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
-        <convert:PointToCanvasPositionConverter x:Key="PointToCanvasPositionConverter"/>
+        <convert:IndexToCanvasPositionConverter x:Key="IndexToCanvasPositionConverter"/>
         <convert:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
     </UserControl.Resources>
-    
+
     <Grid>
-        <ItemsControl ItemsSource="{Binding Path=GBRegionsList}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas x:Name="GBViewCanvas" />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemContainerStyle>
+        <Canvas x:Name="GBViewCanvas" Margin="{x:Static local:GameboardViewModel.GBMargin}" 
+                Background="LavenderBlush">
+            <ItemsControl ItemsSource="{Binding Path=GameboardModel.GBRegionsList}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemContainerStyle>
                     <Style TargetType="ContentPresenter">
-                    <Setter Property="Canvas.Left" 
-                            Value="{Binding Converter={StaticResource PointToCanvasPositionConverter}, ConverterParameter='LEFT'}"/>
-                    <Setter Property="Canvas.Top"  
-                            Value="{Binding Converter={StaticResource PointToCanvasPositionConverter}, ConverterParameter='TOP'}"/>
-                   </Style>
+                        <Setter Property="Canvas.Left" Value="{Binding Converter={StaticResource IndexToCanvasPositionConverter}, ConverterParameter='LEFT'}"/>
+                        <Setter Property="Canvas.Top" Value="{Binding Converter={StaticResource IndexToCanvasPositionConverter}, ConverterParameter='TOP'}" />
+                    </Style>
                 </ItemsControl.ItemContainerStyle>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
 
-                        <!-- Gamebord square -->
-                        <Rectangle Grid.Row="0" Width="40" Height="40" Fill="Green" Stroke="Black" StrokeThickness="1"/>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <!-- Gameboard square -->
+                            <Rectangle Grid.Row="0" 
+                                       Width="{Binding Source={x:Static local:GameboardViewModel.GBSquareWidth}}"
+                                       Height="{Binding Source={x:Static local:GameboardViewModel.GBSquareWidth}}"
+                                       Fill="{Binding Source={x:Static local:GameboardViewModel.GBSquareBackgroundColor}, Converter={StaticResource ColorToBrushConverter}}" 
+                                       Stroke="{Binding Source={x:Static local:GameboardViewModel.GBSquareBorderColor}, Converter={StaticResource ColorToBrushConverter}}"
+                                       StrokeThickness="{Binding Source={x:Static local:GameboardViewModel.GBSquareBorderThickness}}"
+                                />
 
-                        <!-- Gamepiece in a game square-->
-                        <!--<Ellipse Grid.Row="0" Width="30" Height="30" Fill="{Binding Converter={StaticResource ColorToBrushConverter}}"/>-->
-                        <controls:GamePieceControl />
+                            <!--Gamepiece in a game square -->
+                            <controls:GamePieceControl />
 
+                            <!-- Identifying text for the region number / name -->                          
+                            <TextBlock Grid.Row="1" Text="{Binding RegionName}" Foreground="Black"/>
 
-                        <!-- Identifying text for the region number / name -->
-                        <TextBlock Grid.Row="1" Text="{Binding RegionName}" Foreground="Black"/>
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+                        </Grid>
 
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Canvas>
     </Grid>
 </UserControl>

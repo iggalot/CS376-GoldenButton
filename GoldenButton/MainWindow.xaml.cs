@@ -13,27 +13,19 @@ namespace GoldenButton
     /// </summary>
     public partial class MainWindow : Window
     {
-        #region Private Members
-
-        #endregion
-
         #region Public Members
-        ///// <summary>
-        ///// Our console based gameboard model object
-        ///// </summary>
-        //public static GBModel GameboardModel { get; set; }
-        
+
         /// <summary>
         /// The gamemanager for this game.
         /// </summary>
         public static GameManager gameManager { get; set; }
 
         /// <summary>
-        /// Our gameboard viewmodel object
+        /// Our console based gameboard model object
         /// </summary>
-        public static GameboardViewModel GBViewModelObject { get; set; }
-        #endregion
+        public GameboardViewModel gameboardViewModel { get; set; }
 
+        #endregion
 
         #region Default Constructor
         // constructor
@@ -41,31 +33,27 @@ namespace GoldenButton
         {
             InitializeComponent();
 
-            Trace.WriteLine("================================ Starting Golden Button =========================================");
+            //Trace.WriteLine("================================ Starting Golden Button =========================================");
+
+            // Create our game manager with a default number of squares and then display it
+            gameManager = new GameManager(24);
+
+            // create the gameboard view model fri the gameManager data 
+            gameboardViewModel = new GameboardViewModel(gameManager);
+           // gameboardViewModel.GameboardModel.DisplayBoard();
+
+            // Set the data context for the main window -- our gameboard view model
+            this.DataContext = gameboardViewModel;
+
         }
         #endregion
 
         #region Private Methods
         private void GBViewControl_Loaded(object sender, RoutedEventArgs e)
         {
-            gameManager = new GameManager();
-            gameManager.PlayGame();
+            // Now play the game
+           // gameManager.PlayGame();
 
-            //for(int i = 0; i < 10; i++)
-            //{
-            //    gameManager.NextPlayer();
-            //}
-
-
-
-
-            // create our gameboard view model object
-            GBViewModelObject = new GameboardViewModel();
-
-            // now create the gameboard to be used by the object.
-            GBViewModelObject.CreateGameboard(16);
-
-            GBViewControl.DataContext = GBViewModelObject;
         }
         #endregion
     }

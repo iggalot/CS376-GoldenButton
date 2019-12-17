@@ -41,20 +41,12 @@ namespace GoldenButton
 
     public class GBPiece
     {
-        #region Private Members
-
-        #endregion
 
         #region Public Members
         /// <summary>
         /// Getter / Setter for the mOwner field.
         /// </summary>
         public PieceOwners PieceOwner { get; set; } = PieceOwners.OWNER_ALL;
-
-        /// <summary>
-        /// Tee piece color of our gameboard piece
-        /// </summary>
-        public Color PieceColor { get; set; }
 
         /// <summary>
         /// The shape of our game piece

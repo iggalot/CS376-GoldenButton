@@ -9,22 +9,24 @@ using System.Windows.Data;
 
 namespace GoldenButton.ValueConverters
 {
-    class PointToCanvasPositionConverter : IValueConverter
+    class IndexToCanvasPositionConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             String canvasParameter = parameter as string;
 
-            if(canvasParameter == "LEFT")
+            if (canvasParameter == "LEFT")
             {
                 GBRegion item = value as GBRegion;
-                return item.CenterPoint().X;
+                return (item.Index * (GameboardViewModel.GBSquareWidth - GameboardViewModel.GBSquareBorderThickness) + GameboardViewModel.GBTileLeftPadding);
 
-            } else if (canvasParameter == "TOP")
+            }
+            else if (canvasParameter == "TOP")
             {
-                GBRegion item = value as GBRegion;
-                return (item.CenterPoint().Y);
-            } else
+                return GameboardViewModel.GBTileTopPadding;
+                
+            }
+            else
             {
                 throw new NotImplementedException("Invalid parameter " + canvasParameter + " passed to PointToCAnvasPositionConverter!");
             }

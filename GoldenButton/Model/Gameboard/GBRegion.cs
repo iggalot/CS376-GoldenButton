@@ -44,26 +44,10 @@ namespace GoldenButton
         public RegionPieceTypes RegionPieceType { get; set; }
 
         /// <summary>
-        /// The width of our region / or primary dimension for non rectangle
-        /// </summary>
-        public double Width { get; set; }
-
-        /// <summary>
-        /// The height of our region / or secondary dimension for non rectangle
-        /// </summary>
-        public double Height { get; set; }
-
-        /// <summary>
         /// The index of our region number, for referencing in the arrays.
         /// Max = 48, Min = 16;
         /// </summary>
-        public int  Index { get; set; }
-
-        /// <summary>
-        /// The insertion point of our region into the gameboard. 
-        /// For rectangles, will be the upper left corner of the rectangle.
-        /// </summary>
-        public Point InsertPoint { get; set; }
+        public int Index { get; set; }
 
         /// <summary>
         /// The gamepiece contained in this region of the gameboard
@@ -72,29 +56,15 @@ namespace GoldenButton
 
         #endregion
 
-        #region Public Methods
-        public Point CenterPoint()
-        {
-            Point temppoint = new Point((InsertPoint.X + this.Width / 2), -(InsertPoint.Y + this.Height / 2));
-            return temppoint;
-        }
-        #endregion
-
         #region Constructor
         /// <summary>
         /// Default constructor
         /// </summary>
         /// <param name="index">Index of our region for locating in the gameboard array</param>
-        /// <param name="width">Primary dimension of the region (width for rectangle)</param>
-        /// <param name="height">Secondary dimension of the region (height for rectangle)</param>
         /// <param name="shape">Shape descriptor of the region -- Rectangle by default</param>
-        public GBRegion(int index, double width = 40, double height = 40, RegionShapes shape = RegionShapes.REGION_RECTANGLE)
+        public GBRegion(int index)
         {
             Index = index;
-            InsertPoint = new System.Windows.Point(index * width, -height);
-            Width = width;
-            Height = height;
-            RegionShape = shape;
             RegionName = "#" + (index+1).ToString();
 
             PieceTypes type;
