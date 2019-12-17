@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace GoldenButton.ValueConverters
 {
@@ -15,24 +16,25 @@ namespace GoldenButton.ValueConverters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             GBRegion region = GameboardViewModel.GameboardModel.GBRegionsList[(int)value];
+            ColorConverterHelpers helper = new ColorConverterHelpers();
 
-            if(region != null)
+            if (region != null)
             {
                 GBPiece piece = region.Piece;
 
                 switch(piece.PieceType)
                 {
                     case (PieceTypes.TYPE_NONE):
-                        return GameboardViewModel.GBSquareBackgroundColor;
+                        return new SolidColorBrush(helper.ConvertColorType(GameboardViewModel.GBSquareBackgroundColor));
                         
                     case (PieceTypes.TYPE_GOLDEN):
-                        return GameboardViewModel.GBGoldenTileBackgroundColor;
+                        return new SolidColorBrush(helper.ConvertColorType(GameboardViewModel.GBGoldenTileBackgroundColor));
                
                     case (PieceTypes.TYPE_NORMAL):
-                        return GameboardViewModel.GBNormalTileBackgroundColor;
+                        return new SolidColorBrush(helper.ConvertColorType(GameboardViewModel.GBNormalTileBackgroundColor));
 
                     default:
-                        return GameboardViewModel.GBSquareBackgroundColor;
+                        return new SolidColorBrush(helper.ConvertColorType(GameboardViewModel.GBSquareBackgroundColor));
                 }       
             } else
             {
