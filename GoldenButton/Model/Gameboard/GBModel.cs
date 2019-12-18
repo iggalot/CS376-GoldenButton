@@ -27,7 +27,12 @@ namespace GoldenButton
 
         #endregion
 
-        #region Constructor
+        #region Constructors
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="num"></param>
         public GBModel(int num)
         {
             mRegions = num;
@@ -40,6 +45,28 @@ namespace GoldenButton
             this.ShuffleGameboard(GBRegionsList);
             this.DisplayBoard();
         }
+
+        /// <summary>
+        /// Copy constructor, used to duplicate a GBModel and its currenty regions and pieces.
+        /// </summary>
+        /// <param name="board"></param>
+        /// <returns></returns>
+        public GBModel(GBModel board)
+        {
+            // Store the number of regions
+            mRegions = board.NumRegions;
+
+            // Create a new board with the specified number of regions
+            this.CreateGameboard(mRegions);
+
+            // Copy the regions (and by default their contents)
+            for (int i = 0; i < board.GBRegionsList.Count; i++)
+            {
+                this.GBRegionsList[i] = board.GBRegionsList[i];
+            }
+        }
+
+
         #endregion
 
         #region Private Methods
@@ -91,11 +118,20 @@ namespace GoldenButton
         /// <param name="gameboard">The gameboard collection</param>
         /// <param name="from">Source index of piece to be moved</param>
         /// <param name="to">Destination index for piece to be moved </param>
-        private void SwapPiece(ObservableCollection<GBRegion> gameboard, int from, int to)
+        public void SwapPiece(ObservableCollection<GBRegion> gameboard, int from, int to)
         {
             GBPiece temp = gameboard[from].Piece;
             gameboard[from].Piece = gameboard[to].Piece;
             gameboard[to].Piece = temp;
+        }
+
+        public void RemovePiece(ObservableCollection<GBRegion> gameboard, int index)
+        {
+            // Create a blank piece
+            GBPiece piece = new GBPiece(PieceOwners.OWNER_ALL, PieceTypes.TYPE_NONE);
+
+            // And add it to the region
+            gameboard[index].Piece = piece;
         }
 
         #endregion

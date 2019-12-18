@@ -1,6 +1,8 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 
@@ -9,57 +11,132 @@ namespace GoldenButton
     /// <summary>
     /// Holds the information and manages the rules of the game
     /// </summary>
-    public class GameManager
+    public class GameManager : BaseModel
     {
         #region Private Members
         /// <summary>
         /// The number of players for this game
         /// </summary>
-        public static int mNumPlayers = 2;
+        private static int mNumPlayers = 2;
 
         /// <summary>
         /// The maximum number of rounds to play.
         /// </summary>
-        public static int maxRounds = 5;
+        private static int mMaxRounds = 5;
 
         /// <summary>
         /// The current round number.
         /// </summary>
-        public static int currentRoundNum = 0;
+        private static int mCurrentRoundNum = 0;
 
+        /// <summary>
+        /// The current active player
+        /// </summary>
+        private static Player mCurrentPlayer;
+
+        /// <summary>
+        /// The gameboard object
+        /// </summary>
+        private GBModel mGameboard;
+
+        /// <summary>
+        /// The first selection click index.
+        /// </summary>
+        private int mFirstSelectedIndex = -1;
         #endregion
 
+        /// <summary>
+        /// The second selection click index
+        /// </summary>
+        private int mSecondSelectedIndex = -1;
+
         #region Public Members
+
         /// <summary>
         /// The current player
         /// </summary>
-        Player CurrentPlayer { get; set; }
+        public Player CurrentPlayer { 
+            get => mCurrentPlayer;
+            set 
+            {
+                mCurrentPlayer = value;
+
+                // Call OnPropertyChanged whenever ther property is updated
+                OnPropertyChanged("CurrentPlayer");
+            } 
+        }
 
         /// <summary>
         /// The player information for this game
         /// </summary>
-        List<Player> Players { get; set; }
+        public static ObservableCollection<Player> Players { get; set; }
 
         /// <summary>
         /// The gameboard for this game
         /// </summary>
-        public GBModel Gameboard { get; set; }
+        public GBModel Gameboard 
+        {
+            get => mGameboard;
+            set
+            {
+                mGameboard = value;
+
+                OnPropertyChanged("Gameboard");
+            }
+        }
 
         /// <summary>
         /// Is the game over?  I.e. has someone already one?  
         /// </summary>
         public static bool GameIsOver { get; set; } = false;
 
-        
-        #endregion
+        ///// <summary>
+        ///// Is the player's turn over?
+        ///// </summary>
+        //public bool TurnIsOver
+        //{
+        //    get => mTurnIsOver;
+        //    set
+        //    {
+        //        mTurnIsOver ^= false;
 
-        #region Public Methods
+        //        OnPropertyChanged("TurnIsOver");
+        //    }
+        //}
 
-        /// <summary>
-        /// Retrieves the next player in the list and updates Current Player
-        /// </summary>
-        /// <returns></returns>
-        public Player NextPlayer()
+        // The index of the first selected click
+        public int FirstSelectedIndex
+        {
+            get => mFirstSelectedIndex;
+            set
+            {
+                mFirstSelectedIndex = value;
+
+                OnPropertyChanged("FirstSelectedIndex");
+            }
+        }
+
+        // The index of the second selection click
+        public int SecondSelectedIndex
+        { 
+            get => mSecondSelectedIndex;
+            set
+            {
+                mSecondSelectedIndex = value;
+
+                OnPropertyChanged("SecondSelectedIndex");
+            }
+        }
+
+    #endregion
+
+    #region Public Methods
+
+    /// <summary>
+    /// Retrieves the next player in the list and updates Current Player
+    /// </summary>
+    /// <returns></returns>
+    public Player NextPlayer()
         {
             int index=0;
             bool matchFound = false;
@@ -90,38 +167,38 @@ namespace GoldenButton
             return Players[index];
         }
 
-        /// <summary>
-        /// Starts the game play and controls our main game loop
-        /// </summary>
-        public void PlayGame()
-        {
-            // The main game loop for our game
-            // Check if the game is over...
-            while(!GameIsOver)
-            {
-                currentRoundNum++;
-                Trace.WriteLine("============ Begin Round " + currentRoundNum.ToString() + " ==============");
+        ///// <summary>
+        ///// Starts the game play and controls our main game loop
+        ///// </summary>
+        //public void PlayGame()
+        //{
+        //    // The main game loop for our game
+        //    // Check if the game is over...
+        //    while(!GameIsOver)
+        //    {
+        //        mCurrentRoundNum++;
+        //        Trace.WriteLine("============ Begin Round " + mCurrentRoundNum.ToString() + " ==============");
 
-                // For each round
-                for (int i = 0; i < mNumPlayers; i++)
-                {
-                    // Play a round for the current player.
-                    this.PlayRound(CurrentPlayer);
+        //        // For each round
+        //        for (int i = 0; i < mNumPlayers; i++)
+        //        {
+        //            // Play a round for the current player.
+        //            this.PlayRound(CurrentPlayer);
 
-                    // If the game is over, exit the main game loop
-                    if (GameIsOver)
-                    {
-                        Trace.WriteLine("====== GAME IS OVER!!! " + CurrentPlayer.Name + " has won!! =======");
-                        break;
-                    }
+        //            // If the game is over, exit the main game loop
+        //            if (GameIsOver)
+        //            {
+        //                Trace.WriteLine("====== GAME IS OVER!!! " + CurrentPlayer.Name + " has won!! =======");
+        //                break;
+        //            }
 
-                    // Move to the next player in the round
-                    CurrentPlayer = this.NextPlayer();
-                }
-            }
+        //            // Move to the next player in the round
+        //            CurrentPlayer = NextPlayer();
+        //        }
+        //    }
 
 
-        }
+        //}
 
         //public int getPlayerFirstSelection(int index)
         //{
@@ -138,7 +215,7 @@ namespace GoldenButton
             Trace.WriteLine("-- Playing current round for " + CurrentPlayer.Name);
 
             // Testing. End the game after ten rounds.
-            if (currentRoundNum == 10)
+            if (mCurrentRoundNum == 10)
                 GameIsOver = true;
 
             bool firstSelectComplete = false;
@@ -318,7 +395,7 @@ namespace GoldenButton
             Gameboard = new GBModel(num);
 
             // create the players
-            Players = new List<Player>();
+            Players = new ObservableCollection<Player>();
             for(int i = 0; i < mNumPlayers; i++)
             {
                 Player newPlayer = new Player(i);
@@ -327,8 +404,137 @@ namespace GoldenButton
 
             // set the first player as the current player
             CurrentPlayer = Players[0];
+
+            // Clear the selection index variables
+            FirstSelectedIndex = -1;
+            SecondSelectedIndex = -1;
         }
 
         #endregion
+
+        public bool ProcessMove(int index)
+        {
+            // If the first click is an empty cell, do nothing
+            if (Gameboard.GBRegionsList[index].Piece.PieceType == PieceTypes.TYPE_NONE && (FirstSelectedIndex == -1))
+            {
+                //MessageBox.Show("Nonempty cell required");
+                return false;
+            }
+
+            // No first click yet
+            if (FirstSelectedIndex == -1 && index == 0)
+            {
+                // Remove the piece from the board
+                Gameboard.RemovePiece(Gameboard.GBRegionsList, index);
+                EndTurn();
+                return true;
+            } 
+            
+            if (FirstSelectedIndex == -1)
+            { 
+                //MessageBox.Show("First click");
+                FirstSelectedIndex = index;
+                return false;
+            }
+
+            // Click is the same as the first, so unselect it
+            if (index == FirstSelectedIndex)
+            {
+                //MessageBox.Show("Unselecting first click");
+                FirstSelectedIndex = -1;
+                return false;
+            }
+
+            // Otherwise, this is the second click.
+            // If the second click isnt an empty cell, invalidate the selection
+            if(Gameboard.GBRegionsList[index].Piece.PieceType != PieceTypes.TYPE_NONE)
+            {
+                //MessageBox.Show("Empty cell required");
+                return false;
+            }
+
+            // First check that the second click is to the left of the first index
+            if (index > FirstSelectedIndex)
+            {
+                //MessageBox.Show("Invalid second click.  Must be to the left of the first selection.");
+                return false;
+            } else
+            {
+                //MessageBox.Show("Second click");
+                SecondSelectedIndex = index;
+            }
+
+            if(!ValidateMove(FirstSelectedIndex, SecondSelectedIndex))
+            {
+                FirstSelectedIndex = -1;
+                SecondSelectedIndex = -1;
+                return false;
+            }
+
+            // Swap the pieces on the board
+            Gameboard.SwapPiece(Gameboard.GBRegionsList, FirstSelectedIndex, SecondSelectedIndex);
+
+            EndTurn();
+            return true;
+        }
+
+        /// <summary>
+        /// Checks that a move between two indices is allowed.  I.e. is there another piece in the way?  Jumping is not 
+        /// allowed.
+        /// </summary>
+        /// <param name="first">Index of the source</param>
+        /// <param name="second">Index of the destination</param>
+        /// <returns></returns>
+        private bool ValidateMove(int first, int second)
+        {
+            bool valid = true;
+
+            // Check that we are not jumping over a piece.  Starts at index - 1 since the first index must contain a piece
+            for (int i = first-1; i > second; i--)
+            {
+                if(Gameboard.GBRegionsList[i].Piece.PieceType != PieceTypes.TYPE_NONE)
+                {
+                    valid = false;
+                    MessageBox.Show("Cannot move.  There is another piece in the way");
+                    break;
+                }
+            }
+
+            return valid;
+        }
+
+        private void EndGame()
+        {
+            MessageBox.Show(CurrentPlayer.Name + " is the winner");
+            
+            // TODO:  End the game...update statistics, winner splash screen
+        }
+
+        /// <summary>
+        /// The routine that ends a players turn.  Cleares selection indices and updates the current player.
+        /// </summary>
+        private void EndTurn()
+        {
+
+            // Duplicate the gameboard to trigger OnPropertyChanged via the assignment operation
+            Gameboard = new GBModel(Gameboard);
+
+            // Check that the golden button isn't in the leftmost cell
+            if (Gameboard.GBRegionsList[0].Piece.PieceType == PieceTypes.TYPE_GOLDEN)
+            {
+                EndGame();
+            }
+
+            // Otherwise, reset the index selection variables
+            FirstSelectedIndex = -1;
+            SecondSelectedIndex = -1;
+
+            // Update the Current Player
+            CurrentPlayer = NextPlayer();
+
+            // Display the board on the console.
+            Gameboard.DisplayBoard();
+
+        }
     }
 }

@@ -80,9 +80,14 @@ namespace GoldenButton
         public static Color GBTileHoverColor { get; } = Color.Orange;
 
         /// <summary>
-        /// The gameboard object associated with this viewmodel
+        /// The color for when a tile has been selected as part of a move
         /// </summary>
-        public static GBModel GameboardModel { get; set;}
+        public static Color GBTileSelected { get; } = GBTileHoverColor;
+
+        /// <summary>
+        /// The associated game manager for this view
+        /// </summary>
+        public static GameManager Manager { get; set; }
 
         #endregion
 
@@ -111,14 +116,15 @@ namespace GoldenButton
         #endregion
 
         #region Default Constructor
+
         /// <summary>
-        /// Defaukl constructor
+        /// Default constructor for our ViewModel
         /// </summary>
-        /// <param name="num">Parameter that indicates the number of squares to create our gameboard</param>
+        /// <param name="game">The associated GameManager for this view model</param>
         public GameboardViewModel(GameManager game)
         {
-            // Set our gameboard object
-            GameboardModel = game.Gameboard;
+            // Save our game manager object
+            Manager = game;           
 
             // Create our gameboard commands
             var cmd1 = new RelayCommand(o => { MessageBox.Show("Command received and clicked"); }, o=> true);

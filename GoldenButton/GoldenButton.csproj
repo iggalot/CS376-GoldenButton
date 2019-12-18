@@ -104,6 +104,7 @@
     <Compile Include="Controls\GamePieceControl.xaml.cs">
       <DependentUpon>GamePieceControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\BaseModel.cs" />
     <Compile Include="Model\GameManager.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Model\PlayerTurn.cs" />

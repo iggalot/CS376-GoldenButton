@@ -2,6 +2,7 @@
 
 namespace GoldenButton
 {
+    #region Enums
     /// <summary>
     /// Region shapes for the gameboard
     /// </summary>
@@ -21,10 +22,17 @@ namespace GoldenButton
         REGION_PIECETYPE_GOLDEN
     }
 
+    #endregion
 
     // One of the gameboard regions (square, hex, etc)
-    public class GBRegion
+    public class GBRegion : BaseModel
     {
+        #region Private Members
+
+        // The piece currently stored in the region
+        private GBPiece mPiece;
+
+        #endregion
 
         #region Public Members
         /// <summary>
@@ -52,7 +60,17 @@ namespace GoldenButton
         /// <summary>
         /// The gamepiece contained in this region of the gameboard
         /// </summary>
-        public GBPiece Piece { get; set; }
+        public GBPiece Piece 
+        {
+            get => mPiece;
+            set
+            {
+                mPiece = value;
+
+                // Call OnPropertyChanged whenever their property is updated
+                OnPropertyChanged("Piece");
+            }
+        }
 
         #endregion
 

@@ -40,7 +40,7 @@ namespace GoldenButton
 
     #endregion
 
-    public class GBPiece
+    public class GBPiece : BaseModel
     {
 
         #region Public Members

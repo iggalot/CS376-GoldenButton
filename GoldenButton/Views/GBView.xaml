@@ -7,7 +7,8 @@
              xmlns:convert="clr-namespace:GoldenButton.ValueConverters"
              xmlns:controls="clr-namespace:GoldenButton.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             x:Name="GBView_test">
 
     <UserControl.Resources>
         <convert:IndexToCanvasPositionConverter x:Key="IndexToCanvasPositionConverter"/>
@@ -15,9 +16,15 @@
     </UserControl.Resources>
 
     <Grid>
-        <Canvas x:Name="GBViewCanvas" Margin="{x:Static local:GameboardViewModel.GBMargin}" 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Canvas Grid.Row="0" x:Name="GBViewCanvas" Height="200"
+                Margin="{x:Static local:GameboardViewModel.GBMargin}" 
                 Background="LavenderBlush">
-            <ItemsControl ItemsSource="{Binding Path=GameboardModel.GBRegionsList}">
+            <ItemsControl ItemsSource="{Binding Path=Manager.Gameboard.GBRegionsList}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas />
@@ -36,15 +43,16 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <!-- Gameboard square -->
                             <Rectangle Grid.Row="0" 
-                                       Width="{Binding Source={x:Static local:GameboardViewModel.GBSquareWidth}}"
-                                       Height="{Binding Source={x:Static local:GameboardViewModel.GBSquareWidth}}"
-                                       Fill="{Binding Source={x:Static local:GameboardViewModel.GBSquareBackgroundColor}, Converter={StaticResource ColorToBrushConverter}}" 
-                                       Stroke="{Binding Source={x:Static local:GameboardViewModel.GBSquareBorderColor}, Converter={StaticResource ColorToBrushConverter}}"
-                                       StrokeThickness="{Binding Source={x:Static local:GameboardViewModel.GBSquareBorderThickness}}"
-                                />
+                                    Width="{Binding Source={x:Static local:GameboardViewModel.GBSquareWidth}}"
+                                    Height="{Binding Source={x:Static local:GameboardViewModel.GBSquareWidth}}"
+                                    Fill="{Binding Source={x:Static local:GameboardViewModel.GBSquareBackgroundColor}, Converter={StaticResource ColorToBrushConverter}}" 
+                                    Stroke="{Binding Source={x:Static local:GameboardViewModel.GBSquareBorderColor}, Converter={StaticResource ColorToBrushConverter}}"
+                                    StrokeThickness="{Binding Source={x:Static local:GameboardViewModel.GBSquareBorderThickness}}"
+                            />
 
                             <!--Gamepiece in a game square -->
                             <controls:GamePieceControl Grid.Row="0"/>
@@ -58,5 +66,13 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </Canvas>
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Label Width="100" Content="{Binding Path=Manager.CurrentPlayer.Name}" />
+            <Label Width="80" Content="1st Click" />
+            <Label Width="50" Content="{Binding Manager.FirstSelectedIndex}" />
+            <Label Width="80" Content="2nd Click" />
+            <Label Width="50" Content="{Binding Manager.SecondSelectedIndex}" />
+        </StackPanel>
+
     </Grid>
 </UserControl>

@@ -18,7 +18,7 @@ namespace GoldenButton.ValueConverters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            GBRegion region = GameboardViewModel.GameboardModel.GBRegionsList[(int)value];
+            GBRegion region = GameboardViewModel.Manager.Gameboard.GBRegionsList[(int)value];
             ColorConverterHelpers helper = new ColorConverterHelpers();
 
             if (region != null)
