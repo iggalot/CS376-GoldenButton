@@ -19,9 +19,12 @@ namespace GoldenButton.Controls
 
         }
 
-        private void MyButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void TileSelect_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            MessageBox.Show("I was clicked");
+            var button = e.OriginalSource as Button;
+            var context = button.DataContext as GBRegion;
+
+            MessageBox.Show(context.DisplayInfo());
 
         }
     }

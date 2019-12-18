@@ -30,6 +30,7 @@ namespace GoldenButton
         ICON_DEFAULT          
     }
 
+    // For determining the type of piece 
     public enum PieceTypes
     {
         TYPE_NONE,

@@ -41,7 +41,7 @@ namespace GoldenButton.ValueConverters
                 }       
             } else
             {
-                throw new NotImplementedException("IndexToPieceColorConverter received an invalid PieceType in Piece #" + ".");
+                throw new NotImplementedException("IndexToPieceColorConverter received an invalid PieceType");
             }
         }
 

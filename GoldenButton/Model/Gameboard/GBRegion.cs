@@ -37,11 +37,11 @@ namespace GoldenButton
         /// </summary>
         public RegionShapes RegionShape { get; set; }
 
-        /// <summary>
-        /// Holds the single value for the type of piece contained in the region.  Does not currently used the GBPiece class.
-        /// For console developement only at this point.
-        /// </summary>
-        public RegionPieceTypes RegionPieceType { get; set; }
+        ///// <summary>
+        ///// Holds the single value for the type of piece contained in the region.  Does not currently used the GBPiece class.
+        ///// For console developement only at this point.
+        ///// </summary>
+        //public RegionPieceTypes RegionPieceType { get; set; }
 
         /// <summary>
         /// The index of our region number, for referencing in the arrays.
@@ -71,23 +71,38 @@ namespace GoldenButton
             // create and add a piece to our list of regions
             if (index == 0)
             {
-                RegionPieceType = RegionPieceTypes.REGION_PIECETYPE_GOLDEN;
+                //RegionPieceType = RegionPieceTypes.REGION_PIECETYPE_GOLDEN;
                 type = PieceTypes.TYPE_GOLDEN;
             }
             else if (index < 5)
             {
-                RegionPieceType = RegionPieceTypes.REGION_PIECETYPE_NONE;
+                //RegionPieceType = RegionPieceTypes.REGION_PIECETYPE_NONE;
                 type = PieceTypes.TYPE_NONE;
             }
             else
             {
-                RegionPieceType = RegionPieceTypes.REGION_PIECETYPE_NORMAL;
+                //RegionPieceType = RegionPieceTypes.REGION_PIECETYPE_NORMAL;
                 type = PieceTypes.TYPE_NORMAL;
             }
             
             // Using the class
             Piece = new GBPiece(PieceOwners.OWNER_ALL, type);
         }
+        #endregion
+
+        #region Public Methods
+
+        public string DisplayInfo()
+        {
+            string str = "";
+
+            str = "Index: " + Index + "\n" + 
+                  "Region #" + (Index+1) + "\n" +
+                  "PieceType: " + Piece.PieceType + "\n";
+
+            return str;
+        }
+
         #endregion
     }
 }

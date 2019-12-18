@@ -22,10 +22,10 @@ namespace GoldenButton
         // our main array of gameboard defined regions
         public ObservableCollection<GBRegion> GBRegionsList { get; set; }
 
-        #endregion
-
         // The number of regions in our gameboard
         public int NumRegions { get => mRegions; }
+
+        #endregion
 
         #region Constructor
         public GBModel(int num)
@@ -68,36 +68,37 @@ namespace GoldenButton
         /// <param name="gameboard"></param>
         private void ShuffleGameboard(ObservableCollection<GBRegion> gameboard)
         {
-            // now shuffle our board
+            // now shuffle our our non-golden button pieces
             Random rnd = new Random();
-            for (int i = 0; i < mRegions; i++)
+            for (int i = 1; i < mRegions; i++)
             {
-                int j = rnd.Next(mRegions - 1 - i);
-                GBRegion temp = gameboard[i];
-                gameboard[i] = gameboard[j];
-                gameboard[j] = temp;
+                // ranbdomly choose a region (other than region 0 which is the GoldenButton)
+                int j = rnd.Next(1, mRegions - 1);
+
+                // Now swap the pieces
+                SwapPiece(gameboard, i, j);
+
             }
 
-            // Now make sure the golden button is in the rightmost 25%
-            for (int i = 0; i < mRegions; i++)
-            {
-                // swap the gold button with a region in rightmost 25% of board
-                if (gameboard[i].RegionPieceType == RegionPieceTypes.REGION_PIECETYPE_GOLDEN)
-                {               
-                    if ((i < (int)(0.75 * mRegions)))
-                    {
-                        int j = rnd.Next((int)(0.75 * mRegions), mRegions - 1);  
-                        GBRegion temp = gameboard[i];
-                        gameboard[i] = gameboard[j];
-                        gameboard[j] = temp;
-                    }
-                    break;
-                }
-            }
+            // Now make sure the golden button (at index=0) is in the rightmost 25% and swap it
+            int k = rnd.Next((int)(0.75 * mRegions), mRegions - 1);
+            SwapPiece(gameboard, 0, k);
+        }
+
+        /// <summary>
+        /// Utility function that swaps two pieces on a game board
+        /// </summary>
+        /// <param name="gameboard">The gameboard collection</param>
+        /// <param name="from">Source index of piece to be moved</param>
+        /// <param name="to">Destination index for piece to be moved </param>
+        private void SwapPiece(ObservableCollection<GBRegion> gameboard, int from, int to)
+        {
+            GBPiece temp = gameboard[from].Piece;
+            gameboard[from].Piece = gameboard[to].Piece;
+            gameboard[to].Piece = temp;
         }
 
         #endregion
-
 
         #region Public Methods
         /// <summary>
@@ -106,22 +107,22 @@ namespace GoldenButton
         public void DisplayBoard()
         {
             string str = "";
-            foreach (GBRegion item in GBRegionsList)
+            foreach (GBRegion region in GBRegionsList)
             {
 
-                switch(item.RegionPieceType)
+                switch(region.Piece.PieceType)
                 {
-                    case RegionPieceTypes.REGION_PIECETYPE_GOLDEN:
+                    case PieceTypes.TYPE_GOLDEN:
                     {
                         str += " G ";
                         break;
                     }
-                    case RegionPieceTypes.REGION_PIECETYPE_NORMAL:
+                    case PieceTypes.TYPE_NORMAL:
                     {
                         str += " N ";
                         break;
                     }
-                    case RegionPieceTypes.REGION_PIECETYPE_NONE:
+                    case PieceTypes.TYPE_NONE:
                     {
                         str += " - ";
                         break;

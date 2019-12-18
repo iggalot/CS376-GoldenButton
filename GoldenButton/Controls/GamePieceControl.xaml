@@ -15,7 +15,7 @@
 
         <!-- The template for our game piece -->
         <ControlTemplate x:Key="MyPieceTemplate" TargetType="UserControl">
-            <Button Name="MyButton" Click="MyButton_Click" Background="Transparent"
+            <Button Name="MyButton" Click="TileSelect_Click" Background="Transparent"
                     BorderThickness="{Binding Source={x:Static local:GameboardViewModel.GBSquareBorderThickness}}"
                     BorderBrush="{Binding Source={x:Static local:GameboardViewModel.GBSquareBorderColor}, Converter={StaticResource ColorToBrushConverter}}">
                 <StackPanel Orientation="Horizontal">
