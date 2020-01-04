@@ -32,7 +32,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>-->
 
-        <ItemsControl ItemsSource="{Binding Path=Gameboard.GBRegionsList}">
+        <ItemsControl ItemsSource="{Binding Path=GBRegionsList}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas />

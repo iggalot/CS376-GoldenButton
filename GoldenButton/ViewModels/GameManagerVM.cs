@@ -63,7 +63,7 @@ namespace GoldenButton.ViewModels
         public GameManagerVM(GameboardViewModel board, double width)
         {
             // Create the game manager model for a given gameboard
-            GameManager = new GameManager(board.Gameboard.NumRegions);
+            GameManager = new GameManager(board.GBModel.NumRegions);
 
             // set properties
             HistoryWidth = width;

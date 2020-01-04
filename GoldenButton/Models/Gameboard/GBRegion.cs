@@ -30,8 +30,8 @@ namespace GoldenButton
     {
         #region Private Members
 
-        // The piece currently stored in the region
-        private GBPiece mPiece;
+        //// The piece currently stored in the region
+        //private GBPiece mPiece;
 
         // The index number of this region
         private static int _index;
@@ -64,20 +64,20 @@ namespace GoldenButton
             set { OnPropertyChanged(ref _index, value); }
         }
 
-        /// <summary>
-        /// The gamepiece contained in this region of the gameboard
-        /// </summary>
-        public GBPiece Piece 
-        {
-            get => mPiece;
-            set
-            {
-                mPiece = value;
+        ///// <summary>
+        ///// The gamepiece contained in this region of the gameboard
+        ///// </summary>
+        //public GBPiece Piece 
+        //{
+        //    get => mPiece;
+        //    set
+        //    {
+        //        mPiece = value;
 
-                // Call OnPropertyChanged whenever their property is updated
-                OnPropertyChanged("Piece");
-            }
-        }
+        //        // Call OnPropertyChanged whenever their property is updated
+        //        OnPropertyChanged("Piece");
+        //    }
+        //}
 
         #endregion
 
@@ -95,19 +95,5 @@ namespace GoldenButton
         }
         #endregion
 
-        #region Public Methods
-
-        public string DisplayInfo()
-        {
-            string str = "";
-
-            str = "Index: " + Index + "\n" + 
-                  "Region #" + (Index+1) + "\n" +
-                  "PieceType: " + Piece.PieceType + "\n";
-
-            return str;
-        }
-
-        #endregion
     }
 }

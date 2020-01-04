@@ -68,11 +68,11 @@ namespace GoldenButton.ViewModels
             // Create our region
             GBRegion = new GBRegion(index_count);
 
-            // Create the associated fame piece with this region
+            // Create the associated game piece with this region
             GBPieceVM = new GBPieceVM(GBRegion.Index, GBSquareHeight < GBSquareWidth ? GBSquareHeight : GBSquareWidth);
 
-            // Add the newly created piece model from the GBPieceVM to the GBRegion
-            GBRegion.Piece = GBPieceVM.GBPiece;
+            //// Add the newly created piece model from the GBPieceVM to the GBRegion
+            //GBRegion.Piece = GBPieceVM.GBPiece;
 
             // Determine the insert coordinates for drawing on the canvas
             LeftCoord = index_count * GBSquareWidth;
