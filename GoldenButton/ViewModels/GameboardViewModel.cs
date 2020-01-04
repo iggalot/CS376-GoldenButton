@@ -58,7 +58,6 @@ namespace GoldenButton.ViewModels
         }
         #endregion
 
-
         #region Public Methods
         /// <summary>
         /// Computes the total width needed for the gameboard object window, accounting for the height of the regions
@@ -169,8 +168,6 @@ namespace GoldenButton.ViewModels
             }
         }
 
-
-
         /// <summary>
         /// Routine to shuffle the gameboard
         /// </summary>
@@ -215,10 +212,8 @@ namespace GoldenButton.ViewModels
             // Now shuffle the contents
             ShuffleGameboard();
             DisplayBoard();
-
         }
 
         #endregion
-
     }
 }

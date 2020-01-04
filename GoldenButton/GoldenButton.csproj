@@ -105,14 +105,12 @@
     </ApplicationDefinition>
     <Compile Include="AttachedProperties\AnimationAttachedProperties.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
-    <Compile Include="Controls\GamePieceControl.xaml.cs">
-      <DependentUpon>GamePieceControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\GameboardModel.cs" />
     <Compile Include="Models\GameManager.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\PlayerTurn.cs" />
+    <Compile Include="Utilities\VisualTreeHelperExtensions.cs" />
     <Compile Include="ValueConverters\ColorConverterHelpers.cs" />
     <Compile Include="ValueConverters\ColorToBrushConverter.cs" />
     <Compile Include="ValueConverters\IndexToPieceColorConverter.cs" />
@@ -133,10 +131,6 @@
     <Compile Include="Views\GBView.xaml.cs">
       <DependentUpon>GBView.xaml</DependentUpon>
     </Compile>
-    <Page Include="Controls\GamePieceControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

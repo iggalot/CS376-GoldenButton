@@ -9,10 +9,35 @@
              d:DesignHeight="50" d:DesignWidth="50">
     <UserControl.Resources>
         <convert:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
+
+        <ControlTemplate x:Key="GamePieceTemplate" TargetType="UserControl">
+            <Button Name="MyButton" Background="Transparent"
+                    BorderThickness="{Binding GBTileBorderThickness}"
+                    BorderBrush="{Binding GBTileBorderColor, Converter={StaticResource ColorToBrushConverter}}">
+                <StackPanel Orientation="Horizontal">
+                    <Ellipse
+                        Width="{Binding GBTileDiameter}" 
+                        Height="{Binding GBTileDiameter}" 
+                        >
+                        <!-- Add a hover over effect for our ellipse-->
+                        <Ellipse.Style>
+                            <Style TargetType="{x:Type Ellipse}">
+                                <Setter Property="Fill" Value="{Binding GetColor, Converter={StaticResource ColorToBrushConverter}, FallbackValue=Red}" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Fill" Value="{Binding GBTileHoverColor, Converter={StaticResource ColorToBrushConverter}}" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Ellipse.Style>
+
+                    </Ellipse>
+                </StackPanel>
+            </Button>
+
+        </ControlTemplate>
     </UserControl.Resources>
-    
-    <Grid>
-        <Ellipse Fill="{Binding GetColor, Converter={StaticResource ColorToBrushConverter}, FallbackValue=Red}" 
-                   Height="{Binding GBTileDiameter}" Width="{Binding GBTileDiameter}"/>
-    </Grid>
+
+    <!-- The actual gamepiece control-->
+    <UserControl Template="{StaticResource GamePieceTemplate}" />
 </UserControl>

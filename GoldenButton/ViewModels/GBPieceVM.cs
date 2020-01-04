@@ -36,6 +36,11 @@ namespace GoldenButton.ViewModels
         public static Color GBGoldenTileBackgroundColor { get; } = Color.Yellow;
 
         /// <summary>
+        /// The color to change the piece when it is hovered over
+        /// </summary>
+        public static Color GBTileHoverColor { get; } = Color.Orange;
+
+        /// <summary>
         /// The color of the gamepiece border
         /// </summary>
         public static Color GBTileBorderColor { get; } = Color.Black;

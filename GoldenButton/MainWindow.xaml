@@ -55,7 +55,7 @@
 
         <!-- Status bar-->
         <Grid Grid.ColumnSpan="2" Grid.Row="2" DockPanel.Dock="Bottom" Background="LightBlue" >
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" >
                 <Label Style="{StaticResource MenuStatusLabels}" Content="STATUS BAR" />
                 <Label Content="Canvas Dims:"/>
                 <Label Content="{Binding CanvasWidth}"/>
