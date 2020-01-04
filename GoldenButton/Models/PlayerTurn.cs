@@ -1,5 +1,5 @@
 ﻿
-namespace GoldenButton
+namespace GoldenButton.Models
 {
     /// <summary>
     /// Enum for storing the states of the current move

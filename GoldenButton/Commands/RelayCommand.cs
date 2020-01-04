@@ -5,37 +5,40 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace GoldenButton
+namespace GoldenButton.Commands
 {
     /// <summary>
     /// An implementation for a general relay command
     /// USAGE:  "var cmd1 = new RelayCommand(o => { /* do something 1 */ }, o => true;
     /// </summary>
-    public class RelayCommand : ICommand
+    public class RelayCommand<T> : ICommand
     {
-        private Action<object> execute;
-        private Func<object, bool> canExecute;
+        private readonly Action<T> _execute = null;
+        private readonly Func<T, bool> _canExecute = null;
+
+        public RelayCommand(Action<T> execute, Func<T, bool> canExecute = null)
+        {
+            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+            _canExecute = canExecute ?? (_ => true);
+        }
 
         public event EventHandler CanExecuteChanged
         {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
+            add => CommandManager.RequerySuggested += value;
+            remove => CommandManager.RequerySuggested -= value;
         }
 
-        public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
-        {
-            this.execute = execute;
-            this.canExecute = canExecute;
-        }
+        public bool CanExecute(object parameter) => _canExecute((T)parameter);
 
-        public bool CanExecute(object parameter)
-        {
-            return this.canExecute == null || this.canExecute(parameter);
-        }
+        public void Execute(object parameter) => _execute((T)parameter);
+    }
 
-        public void Execute(object parameter)
-        {
-            this.execute(parameter);
-        }
+    public class RelayCommand : RelayCommand<object>
+    {
+        public RelayCommand(Action execute)
+            : base(_ => execute()) { }
+
+        public RelayCommand(Action execute, Func<bool> canExecute)
+            : base(_ => execute(), _ => canExecute()) { }
     }
 }

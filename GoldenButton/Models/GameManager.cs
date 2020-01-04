@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 
-namespace GoldenButton
+namespace GoldenButton.Models
 {
     /// <summary>
     /// Holds the information and manages the rules of the game
@@ -37,18 +37,26 @@ namespace GoldenButton
         /// <summary>
         /// The gameboard object
         /// </summary>
-        private GBModel mGameboard;
+        private GameboardModel mGameboard;
 
         /// <summary>
         /// The first selection click index.
         /// </summary>
         private int mFirstSelectedIndex = -1;
-        #endregion
 
         /// <summary>
         /// The second selection click index
         /// </summary>
         private int mSecondSelectedIndex = -1;
+
+        /// <summary>
+        /// Signifies if a piece has been moved.
+        /// </summary>
+        private  bool mPieceIsMoved = true;
+
+        #endregion
+
+
 
         #region Public Members
 
@@ -71,17 +79,31 @@ namespace GoldenButton
         /// </summary>
         public static ObservableCollection<Player> Players { get; set; }
 
+        ///// <summary>
+        ///// The gameboard for this game
+        ///// </summary>
+        //public GameboardModel Gameboard 
+        //{
+        //    get => mGameboard;
+        //    set
+        //    {
+        //        mGameboard = value;
+
+        //        OnPropertyChanged("Gameboard");
+        //    }
+        //}
+
         /// <summary>
         /// The gameboard for this game
         /// </summary>
-        public GBModel Gameboard 
+        public bool PieceIsMoved
         {
-            get => mGameboard;
+            get => mPieceIsMoved;
             set
             {
-                mGameboard = value;
+                mPieceIsMoved = value;
 
-                OnPropertyChanged("Gameboard");
+                OnPropertyChanged("PieceIsMoved");
             }
         }
 
@@ -391,8 +413,8 @@ namespace GoldenButton
         /// <param name="num">The number of squares on our gameboard</param>
         public GameManager(int num)
         {
-            // Create our gameboard object
-            Gameboard = new GBModel(num);
+            //// Create our gameboard object
+            //Gameboard = new GameboardModel(num);
 
             // create the players
             Players = new ObservableCollection<Player>();
@@ -414,67 +436,67 @@ namespace GoldenButton
 
         public bool ProcessMove(int index)
         {
-            // If the first click is an empty cell, do nothing
-            if (Gameboard.GBRegionsList[index].Piece.PieceType == PieceTypes.TYPE_NONE && (FirstSelectedIndex == -1))
-            {
-                //MessageBox.Show("Nonempty cell required");
-                return false;
-            }
+            //// If the first click is an empty cell, do nothing
+            //if (Gameboard.GBRegionsList[index].Piece.PieceType == PieceTypes.TYPE_NONE && (FirstSelectedIndex == -1))
+            //{
+            //    //MessageBox.Show("Nonempty cell required");
+            //    return false;
+            //}
 
-            // No first click yet
-            if (FirstSelectedIndex == -1 && index == 0)
-            {
-                // Remove the piece from the board
-                Gameboard.RemovePiece(Gameboard.GBRegionsList, index);
-                EndTurn();
-                return true;
-            } 
+            //// No first click yet
+            //if (FirstSelectedIndex == -1 && index == 0)
+            //{
+            //    // Remove the piece from the board
+            //    Gameboard.RemovePiece(Gameboard.GBRegionsList, index);
+            //    EndTurn();
+            //    return true;
+            //} 
             
-            if (FirstSelectedIndex == -1)
-            { 
-                //MessageBox.Show("First click");
-                FirstSelectedIndex = index;
-                return false;
-            }
+            //if (FirstSelectedIndex == -1)
+            //{ 
+            //    //MessageBox.Show("First click");
+            //    FirstSelectedIndex = index;
+            //    return false;
+            //}
 
-            // Click is the same as the first, so unselect it
-            if (index == FirstSelectedIndex)
-            {
-                //MessageBox.Show("Unselecting first click");
-                FirstSelectedIndex = -1;
-                return false;
-            }
+            //// Click is the same as the first, so unselect it
+            //if (index == FirstSelectedIndex)
+            //{
+            //    //MessageBox.Show("Unselecting first click");
+            //    FirstSelectedIndex = -1;
+            //    return false;
+            //}
 
-            // Otherwise, this is the second click.
-            // If the second click isnt an empty cell, invalidate the selection
-            if(Gameboard.GBRegionsList[index].Piece.PieceType != PieceTypes.TYPE_NONE)
-            {
-                //MessageBox.Show("Empty cell required");
-                return false;
-            }
+            //// Otherwise, this is the second click.
+            //// If the second click isnt an empty cell, invalidate the selection
+            //if(Gameboard.GBRegionsList[index].Piece.PieceType != PieceTypes.TYPE_NONE)
+            //{
+            //    //MessageBox.Show("Empty cell required");
+            //    return false;
+            //}
 
-            // First check that the second click is to the left of the first index
-            if (index > FirstSelectedIndex)
-            {
-                //MessageBox.Show("Invalid second click.  Must be to the left of the first selection.");
-                return false;
-            } else
-            {
-                //MessageBox.Show("Second click");
-                SecondSelectedIndex = index;
-            }
+            //// First check that the second click is to the left of the first index
+            //if (index > FirstSelectedIndex)
+            //{
+            //    //MessageBox.Show("Invalid second click.  Must be to the left of the first selection.");
+            //    return false;
+            //} else
+            //{
+            //    //MessageBox.Show("Second click");
+            //    SecondSelectedIndex = index;
+            //}
 
-            if(!ValidateMove(FirstSelectedIndex, SecondSelectedIndex))
-            {
-                FirstSelectedIndex = -1;
-                SecondSelectedIndex = -1;
-                return false;
-            }
+            //if(!ValidateMove(FirstSelectedIndex, SecondSelectedIndex))
+            //{
+            //    FirstSelectedIndex = -1;
+            //    SecondSelectedIndex = -1;
+            //    return false;
+            //}
 
-            // Swap the pieces on the board
-            Gameboard.SwapPiece(Gameboard.GBRegionsList, FirstSelectedIndex, SecondSelectedIndex);
+            //// Swap the pieces on the board
+            //Gameboard.SwapPiece(Gameboard.GBRegionsList, FirstSelectedIndex, SecondSelectedIndex);
 
-            EndTurn();
+            //EndTurn();
             return true;
         }
 
@@ -489,16 +511,16 @@ namespace GoldenButton
         {
             bool valid = true;
 
-            // Check that we are not jumping over a piece.  Starts at index - 1 since the first index must contain a piece
-            for (int i = first-1; i > second; i--)
-            {
-                if(Gameboard.GBRegionsList[i].Piece.PieceType != PieceTypes.TYPE_NONE)
-                {
-                    valid = false;
-                    MessageBox.Show("Cannot move.  There is another piece in the way");
-                    break;
-                }
-            }
+            //// Check that we are not jumping over a piece.  Starts at index - 1 since the first index must contain a piece
+            //for (int i = first-1; i > second; i--)
+            //{
+            //    if(Gameboard.GBRegionsList[i].Piece.PieceType != PieceTypes.TYPE_NONE)
+            //    {
+            //        valid = false;
+            //        MessageBox.Show("Cannot move.  There is another piece in the way");
+            //        break;
+            //    }
+            //}
 
             return valid;
         }
@@ -516,24 +538,24 @@ namespace GoldenButton
         private void EndTurn()
         {
 
-            // Duplicate the gameboard to trigger OnPropertyChanged via the assignment operation
-            Gameboard = new GBModel(Gameboard);
+            //// Duplicate the gameboard to trigger OnPropertyChanged via the assignment operation
+            //Gameboard = new GameboardModel(Gameboard);
 
-            // Check that the golden button isn't in the leftmost cell
-            if (Gameboard.GBRegionsList[0].Piece.PieceType == PieceTypes.TYPE_GOLDEN)
-            {
-                EndGame();
-            }
+            //// Check that the golden button isn't in the leftmost cell
+            //if (Gameboard.GBRegionsList[0].Piece.PieceType == PieceTypes.TYPE_GOLDEN)
+            //{
+            //    EndGame();
+            //}
 
-            // Otherwise, reset the index selection variables
-            FirstSelectedIndex = -1;
-            SecondSelectedIndex = -1;
+            //// Otherwise, reset the index selection variables
+            //FirstSelectedIndex = -1;
+            //SecondSelectedIndex = -1;
 
-            // Update the Current Player
-            CurrentPlayer = NextPlayer();
+            //// Update the Current Player
+            //CurrentPlayer = NextPlayer();
 
-            // Display the board on the console.
-            Gameboard.DisplayBoard();
+            //// Display the board on the console.
+            //Gameboard.DisplayBoard();
 
         }
     }

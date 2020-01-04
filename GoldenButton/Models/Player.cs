@@ -1,7 +1,7 @@
 ﻿
 using System.Diagnostics;
 
-namespace GoldenButton
+namespace GoldenButton.Models
 {
     public class Player
     {

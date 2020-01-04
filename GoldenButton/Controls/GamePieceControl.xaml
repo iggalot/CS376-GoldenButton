@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GoldenButton"
+             xmlns:vm="clr-namespace:GoldenButton.ViewModels"
+             xmlns:v="clr-namespace:GoldenButton.Views"
              xmlns:convert="clr-namespace:GoldenButton.ValueConverters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -15,22 +17,23 @@
 
         <!-- The template for our game piece -->
         <ControlTemplate x:Key="MyPieceTemplate" TargetType="UserControl">
-            <Button Name="MyButton" Click="TileSelect_Click" Background="Transparent"
-                    BorderThickness="{Binding Source={x:Static local:GameboardViewModel.GBSquareBorderThickness}}"
-                    BorderBrush="{Binding Source={x:Static local:GameboardViewModel.GBSquareBorderColor}, Converter={StaticResource ColorToBrushConverter}}">
+            <Rectangle Fill="Red" Height="10" Width="10"/>
+            <!--<Button Name="MyButton" Click="TileSelect_Click" Background="Transparent"
+                    BorderThickness="{Binding Source={x:Static vm:GameboardViewModel.GBSquareBorderThickness}}"
+                    BorderBrush="{Binding Source={x:Static vm:GameboardViewModel.GBSquareBorderColor}, Converter={StaticResource ColorToBrushConverter}}">
                 <StackPanel Orientation="Horizontal">
                     <Ellipse
-                        Width="{Binding Source={x:Static local:GameboardViewModel.GBTileDiameter}}" 
-                        Height="{Binding Source={x:Static local:GameboardViewModel.GBTileDiameter}}" 
+                        Width="{Binding Source={x:Static vm:GameboardViewModel.GBTileDiameter}}" 
+                        Height="{Binding Source={x:Static vm:GameboardViewModel.GBTileDiameter}}" 
                         >
 
-                        <!-- Add a hover over effect for our ellipse-->
+                        --><!-- Add a hover over effect for our ellipse--><!--
                         <Ellipse.Style>
                             <Style TargetType="{x:Type Ellipse}">
                                 <Setter Property="Fill" Value="{Binding Index, Converter={StaticResource IndexToPieceColorConverter}}" />
                                 <Style.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Fill" Value="{Binding Source={x:Static local:GameboardViewModel.GBTileHoverColor}, Converter={StaticResource ColorToBrushConverter}}" />
+                                        <Setter Property="Fill" Value="{Binding Source={x:Static vm:GameboardViewModel.GBTileHoverColor}, Converter={StaticResource ColorToBrushConverter}}" />
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
@@ -38,7 +41,7 @@
 
                     </Ellipse>
                 </StackPanel>
-            </Button>
+            </Button>-->
         </ControlTemplate>
     </UserControl.Resources>
 

@@ -1,5 +1,6 @@
 ﻿
 
+using GoldenButton.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -29,7 +30,7 @@ namespace GoldenButton.Controls
             //MessageBox.Show("BEFORE:\n" + context.DisplayInfo());
 
             // Now process the move.
-            GameboardViewModel.Manager.ProcessMove(context.Index);
+            //GameboardViewModel.Manager.ProcessMove(context.Index);
 
             //MessageBox.Show("AFTER:\n" + context.DisplayInfo());
         }

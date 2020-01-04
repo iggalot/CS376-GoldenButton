@@ -6,73 +6,138 @@
              xmlns:local="clr-namespace:GoldenButton"
              xmlns:convert="clr-namespace:GoldenButton.ValueConverters"
              xmlns:controls="clr-namespace:GoldenButton.Controls"
+             xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+             xmlns:vm="clr-namespace:GoldenButton.ViewModels"
+             xmlns:v="clr-namespace:GoldenButton.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             x:Name="GBView_test">
+             >
 
     <UserControl.Resources>
-        <convert:IndexToCanvasPositionConverter x:Key="IndexToCanvasPositionConverter"/>
         <convert:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
+
+        <DataTemplate DataType="{x:Type vm:GBRegionVM}">
+            <v:GBRegionView />
+        </DataTemplate>
+
+
     </UserControl.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
+    <Grid Margin="{Binding GBMargin}"
+          Background="LavenderBlush" 
+          VerticalAlignment="Center">
+        <!--<Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Canvas Grid.Row="0" x:Name="GBViewCanvas" Height="200"
-                Margin="{x:Static local:GameboardViewModel.GBMargin}" 
-                Background="LavenderBlush">
-            <ItemsControl ItemsSource="{Binding Path=Manager.Gameboard.GBRegionsList}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemContainerStyle>
-                    <Style TargetType="ContentPresenter">
-                        <Setter Property="Canvas.Left" Value="{Binding Converter={StaticResource IndexToCanvasPositionConverter}, ConverterParameter='LEFT'}"/>
-                        <Setter Property="Canvas.Top" Value="{Binding Converter={StaticResource IndexToCanvasPositionConverter}, ConverterParameter='TOP'}" />
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
+        </Grid.RowDefinitions>-->
 
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <!-- Gameboard square -->
+        <ItemsControl ItemsSource="{Binding Path=Gameboard.GBRegionsList}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" Value="{Binding LeftCoord}"/>
+                    <Setter Property="Canvas.Top" Value="{Binding TopCoord}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <!-- For rendering the region shape -->
+                        <ContentControl Content="{Binding}" Grid.Row="0"/>
+
+                        <!-- Region numbering -->
+                        <Label Grid.Row="1" Content="{Binding GBRegion.RegionName}"/>
+
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+
+    <!-- Gameboard square -->
+            <!--
                             <Rectangle Grid.Row="0" 
-                                    Width="{Binding Source={x:Static local:GameboardViewModel.GBSquareWidth}}"
-                                    Height="{Binding Source={x:Static local:GameboardViewModel.GBSquareWidth}}"
-                                    Fill="{Binding Source={x:Static local:GameboardViewModel.GBSquareBackgroundColor}, Converter={StaticResource ColorToBrushConverter}}" 
-                                    Stroke="{Binding Source={x:Static local:GameboardViewModel.GBSquareBorderColor}, Converter={StaticResource ColorToBrushConverter}}"
-                                    StrokeThickness="{Binding Source={x:Static local:GameboardViewModel.GBSquareBorderThickness}}"
+                                    Width="{Binding Source={x:Static vm:GameboardViewModel.GBSquareWidth}}"
+                                    Height="{Binding Source={x:Static vm:GameboardViewModel.GBSquareWidth}}"
+                                    Fill="{Binding Source={x:Static vm:GameboardViewModel.GBSquareBackgroundColor}, Converter={StaticResource ColorToBrushConverter}}" 
+                                    Stroke="{Binding Source={x:Static vm:GameboardViewModel.GBSquareBorderColor}, Converter={StaticResource ColorToBrushConverter}}"
+                                    StrokeThickness="{Binding Source={x:Static vm:GameboardViewModel.GBSquareBorderThickness}}"
                             />
 
-                            <!--Gamepiece in a game square -->
+                            -->
+            <!--Gamepiece in a game square -->
+            <!--
                             <controls:GamePieceControl Grid.Row="0"/>
 
-                            <!-- Identifying text for the region number / name -->                          
+                            -->
+            <!-- Identifying text for the region number / name -->
+            <!--
                             <TextBlock Grid.Row="1" Text="{Binding RegionName}" Foreground="Black"/>
 
                         </Grid>
 
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </Canvas>
-        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            </ItemsControl>-->
+
+            <!--<Rectangle
+                Canvas.Left="200"
+                Canvas.Top="100"
+                x:Name="testrect"
+                Width="100"
+                Height="100"
+                Fill="Blue"
+                Stroke="Black"
+                StrokeThickness="5"
+                local:AnimationAttachedProperties.ShouldAnimate="{Binding Path=Manager.PieceIsMoved}"                                                   
+            >
+                <Rectangle.Style>
+                    <Style TargetType="Rectangle">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=Manager.PieceIsMoved, RelativeSource={RelativeSource Self}}" 
+                                         Value="True">
+                                <DataTrigger.EnterActions>
+
+                                    <BeginStoryboard>
+                                        <Storyboard x:Name="Storyboard1" 
+                                                    RepeatBehavior="Forever">
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="(Canvas.Left)"
+                                                From="10" To="500"
+                                                Duration="0:0:1"
+                                                RepeatBehavior="Forever"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+
+                        </Style.Triggers>
+                    </Style>
+                </Rectangle.Style>
+
+            </Rectangle>-->
+
+
+
+
+            <!--<StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Button Content="Animate" Click="Button_Click"/>
             <Label Width="100" Content="{Binding Path=Manager.CurrentPlayer.Name}" />
             <Label Width="80" Content="1st Click" />
             <Label Width="50" Content="{Binding Manager.FirstSelectedIndex}" />
             <Label Width="80" Content="2nd Click" />
             <Label Width="50" Content="{Binding Manager.SecondSelectedIndex}" />
-        </StackPanel>
+        </StackPanel>-->
 
-    </Grid>
 </UserControl>

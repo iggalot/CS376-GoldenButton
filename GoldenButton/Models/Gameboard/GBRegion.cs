@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using GoldenButton.Models;
+using System.Windows;
 
 namespace GoldenButton
 {
@@ -32,6 +33,9 @@ namespace GoldenButton
         // The piece currently stored in the region
         private GBPiece mPiece;
 
+        // The index number of this region
+        private static int _index;
+
         #endregion
 
         #region Public Members
@@ -55,7 +59,10 @@ namespace GoldenButton
         /// The index of our region number, for referencing in the arrays.
         /// Max = 48, Min = 16;
         /// </summary>
-        public int Index { get; set; }
+        public int Index { 
+            get => _index; 
+            set { OnPropertyChanged(ref _index, value); }
+        }
 
         /// <summary>
         /// The gamepiece contained in this region of the gameboard
@@ -83,28 +90,8 @@ namespace GoldenButton
         public GBRegion(int index)
         {
             Index = index;
-            RegionName = "#" + (index+1).ToString();
+            RegionName = "#" + (Index+1).ToString();
 
-            PieceTypes type;
-            // create and add a piece to our list of regions
-            if (index == 0)
-            {
-                //RegionPieceType = RegionPieceTypes.REGION_PIECETYPE_GOLDEN;
-                type = PieceTypes.TYPE_GOLDEN;
-            }
-            else if (index < 5)
-            {
-                //RegionPieceType = RegionPieceTypes.REGION_PIECETYPE_NONE;
-                type = PieceTypes.TYPE_NONE;
-            }
-            else
-            {
-                //RegionPieceType = RegionPieceTypes.REGION_PIECETYPE_NORMAL;
-                type = PieceTypes.TYPE_NORMAL;
-            }
-            
-            // Using the class
-            Piece = new GBPiece(PieceOwners.OWNER_ALL, type);
         }
         #endregion
 

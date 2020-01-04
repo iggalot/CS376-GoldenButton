@@ -4,12 +4,70 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoldenButton"
-        xmlns:views ="clr-namespace:GoldenButton.Views"
+        xmlns:v ="clr-namespace:GoldenButton.Views"
+        xmlns:vm="clr-namespace:GoldenButton.ViewModels"
         mc:Ignorable="d"
+        Width="{Binding AppWindowWidth}"
+        Height="{Binding AppWindowHeight}"
+        ResizeMode="CanMinimize"
+        SizeToContent="WidthAndHeight"
         Title="Golden Button v1.0" >
-    <Border Margin="10" Background="White">
-        <Grid Background="Red">
-            <views:GBView x:Name="GBViewControl" Loaded="GBViewControl_Loaded" />
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:GameboardViewModel}">
+            <v:GBView />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:GameManagerVM}">
+            <v:GameManagerHistoryView />
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{Binding CanvasWidth}"/>
+            <ColumnDefinition Width="{Binding HistoryWindowWidth}"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{Binding MenuBarHeight}"/>
+            <RowDefinition Height="{Binding CanvasHeight}"/>
+            <RowDefinition Height="{Binding MenuBarHeight}"/>
+        </Grid.RowDefinitions>
+
+        <!-- Menu Area -->
+        <Grid Grid.ColumnSpan="2" Grid.Column="0" Background="LightBlue">
+            <Label Style="{StaticResource MenuStatusLabels}" Grid.Column="0" Content="MENU BAR" />
         </Grid>
-    </Border>
+
+        <!-- Main view area-->
+        <Grid Background="Aquamarine" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">
+            <Canvas Width="{Binding CanvasWidth}"
+                        Height="{Binding CanvasHeight}">
+                <ContentControl Content="{Binding GameboardVM}"/>
+            </Canvas>
+        </Grid>
+
+        <!-- Game history area -->
+        <Grid Grid.Column="2" Grid.Row="1" Background="Teal" >
+            <ContentControl HorizontalAlignment="Center" Content="{Binding GameManagerVM}"/>
+        </Grid>
+
+        <!-- Status bar-->
+        <Grid Grid.ColumnSpan="2" Grid.Row="2" DockPanel.Dock="Bottom" Background="LightBlue" >
+            <StackPanel Orientation="Horizontal">
+                <Label Style="{StaticResource MenuStatusLabels}" Content="STATUS BAR" />
+                <Label Content="Canvas Dims:"/>
+                <Label Content="{Binding CanvasWidth}"/>
+                <Label Content=" x "/>
+                <Label Content="{Binding CanvasHeight}"/>
+                <Label Content="        "/>
+                <Label Content="History Dims:"/>
+                <Label Content="{Binding HistoryWindowWidth}"/>
+                <Label Content=" x "/>
+                <Label Content="{Binding HistoryWindowHeight}"/>
+            </StackPanel>
+
+        </Grid>
+    </Grid>
 </Window>

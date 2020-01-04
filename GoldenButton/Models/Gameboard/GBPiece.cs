@@ -1,4 +1,5 @@
 ﻿
+using GoldenButton.Models;
 using System.Windows.Media;
 
 namespace GoldenButton
@@ -66,27 +67,6 @@ namespace GoldenButton
         #endregion
 
         #region Public Methods
-
-        public Color GetColor {
-            get {
-                if(PieceType == PieceTypes.TYPE_NORMAL)
-                {
-                    // piece color is blue for normal pieces
-                    return Color.FromArgb(255, 0, 0, 255);
-                } else if (PieceType == PieceTypes.TYPE_GOLDEN)
-                {
-                    // piece color is gold for the golden button
-                    return Color.FromArgb(255, 255, 233, 0);
-                } else if (PieceType == PieceTypes.TYPE_NONE) {
-                    // all other "pieces" are white and fully transparent (so that they don't show up)
-                    return Color.FromArgb(0, 255, 255, 255); 
-                } else
-                {
-                    // Return a black color if we have an error
-                    return Color.FromArgb(255, 0, 0, 0);
-                }
-            }
-        }
 
         #endregion
 

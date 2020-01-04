@@ -1,4 +1,5 @@
 ﻿
+using GoldenButton.ViewModels;
 using System.Windows.Controls;
 
 namespace GoldenButton.Views
@@ -11,6 +12,12 @@ namespace GoldenButton.Views
         public GBView()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            // Toggle the setting
+            //GameboardViewModel.Manager.PieceIsMoved = (false ? true : false);
         }
     }
 }

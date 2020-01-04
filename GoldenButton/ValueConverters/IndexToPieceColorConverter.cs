@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoldenButton.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
@@ -18,31 +19,32 @@ namespace GoldenButton.ValueConverters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            GBRegion region = GameboardViewModel.Manager.Gameboard.GBRegionsList[(int)value];
-            ColorConverterHelpers helper = new ColorConverterHelpers();
+            //GBRegion region = GameboardViewModel.Gameboard.GBRegionsList[(int)value];
+            //ColorConverterHelpers helper = new ColorConverterHelpers();
 
-            if (region != null)
-            {
-                GBPiece piece = region.Piece;
+            //if (region != null)
+            //{
+            //    GBPiece piece = region.Piece;
 
-                switch(piece.PieceType)
-                {
-                    case (PieceTypes.TYPE_NONE):
-                        return new SolidColorBrush(helper.ConvertColorType(GameboardViewModel.GBSquareBackgroundColor));
-                        
-                    case (PieceTypes.TYPE_GOLDEN):
-                        return new SolidColorBrush(helper.ConvertColorType(GameboardViewModel.GBGoldenTileBackgroundColor));
-               
-                    case (PieceTypes.TYPE_NORMAL):
-                        return new SolidColorBrush(helper.ConvertColorType(GameboardViewModel.GBNormalTileBackgroundColor));
+            //    switch(piece.PieceType)
+            //    {
+            //        case (PieceTypes.TYPE_NONE):
+            //            return new SolidColorBrush(helper.ConvertColorType(GameboardViewModel.GBSquareBackgroundColor));
 
-                    default:
-                        return new SolidColorBrush(helper.ConvertColorType(GameboardViewModel.GBSquareBackgroundColor));
-                }       
-            } else
-            {
-                throw new NotImplementedException("IndexToPieceColorConverter received an invalid PieceType");
-            }
+            //        case (PieceTypes.TYPE_GOLDEN):
+            //            return new SolidColorBrush(helper.ConvertColorType(GameboardViewModel.GBGoldenTileBackgroundColor));
+
+            //        case (PieceTypes.TYPE_NORMAL):
+            //            return new SolidColorBrush(helper.ConvertColorType(GameboardViewModel.GBNormalTileBackgroundColor));
+
+            //        default:
+            //            return new SolidColorBrush(helper.ConvertColorType(GameboardViewModel.GBSquareBackgroundColor));
+            //    }       
+            //} else
+            //{
+            //    throw new NotImplementedException("IndexToPieceColorConverter received an invalid PieceType");
+            //}
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

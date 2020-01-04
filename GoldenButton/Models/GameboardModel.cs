@@ -1,14 +1,15 @@
-﻿
+﻿using GoldenButton.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Windows;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace GoldenButton
+namespace GoldenButton.Models
 {
-    // Our main Gameboard Object
-    public class GBModel
+    public class GameboardModel
     {
         #region Private Members
         /// <summary>
@@ -20,7 +21,7 @@ namespace GoldenButton
         #region Public Members
 
         // our main array of gameboard defined regions
-        public ObservableCollection<GBRegion> GBRegionsList { get; set; }
+        public ObservableCollection<GBRegionVM> GBRegionsList { get; set; }
 
         // The number of regions in our gameboard
         public int NumRegions { get => mRegions; }
@@ -33,7 +34,7 @@ namespace GoldenButton
         /// Default constructor
         /// </summary>
         /// <param name="num"></param>
-        public GBModel(int num)
+        public GameboardModel(int num)
         {
             mRegions = num;
 
@@ -51,7 +52,7 @@ namespace GoldenButton
         /// </summary>
         /// <param name="board"></param>
         /// <returns></returns>
-        public GBModel(GBModel board)
+        public GameboardModel(GameboardModel board)
         {
             // Store the number of regions
             mRegions = board.NumRegions;
@@ -77,15 +78,16 @@ namespace GoldenButton
         /// <param name="num"></param>
         private void CreateGameboard(int num)
         {
-            ObservableCollection<GBRegion> regions = new ObservableCollection<GBRegion>();
+            ObservableCollection<GBRegionVM> regions = new ObservableCollection<GBRegionVM>();
 
             for (int i = 0; i < num; i++)
             {
                 // create and add a region to our list of regions
-                regions.Add(new GBRegion(i));
+                //TODO:  Fixe this arbitary '30' constant.  Should be a top padding dimensions from the gameboardVM
+                regions.Add(new GBRegionVM(30));
             }
 
-            // Assign the nerwly created region
+            // Assign the newly created region
             GBRegionsList = regions;
         }
 
@@ -93,7 +95,7 @@ namespace GoldenButton
         /// Routine to shuffle the gameboard
         /// </summary>
         /// <param name="gameboard"></param>
-        private void ShuffleGameboard(ObservableCollection<GBRegion> gameboard)
+        private void ShuffleGameboard(ObservableCollection<GBRegionVM> gameboard)
         {
             // now shuffle our our non-golden button pieces
             Random rnd = new Random();
@@ -118,11 +120,11 @@ namespace GoldenButton
         /// <param name="gameboard">The gameboard collection</param>
         /// <param name="from">Source index of piece to be moved</param>
         /// <param name="to">Destination index for piece to be moved </param>
-        public void SwapPiece(ObservableCollection<GBRegion> gameboard, int from, int to)
+        public void SwapPiece(ObservableCollection<GBRegionVM> gameboard, int from, int to)
         {
-            GBPiece temp = gameboard[from].Piece;
-            gameboard[from].Piece = gameboard[to].Piece;
-            gameboard[to].Piece = temp;
+            GBPiece temp = gameboard[from].GBRegion.Piece;
+            gameboard[from].GBRegion.Piece = gameboard[to].GBRegion.Piece;
+            gameboard[to].GBRegion.Piece = temp;
         }
 
         public void RemovePiece(ObservableCollection<GBRegion> gameboard, int index)
@@ -143,26 +145,26 @@ namespace GoldenButton
         public void DisplayBoard()
         {
             string str = "";
-            foreach (GBRegion region in GBRegionsList)
+            foreach (GBRegionVM region in GBRegionsList)
             {
 
-                switch(region.Piece.PieceType)
+                switch (region.GBRegion.Piece.PieceType)
                 {
                     case PieceTypes.TYPE_GOLDEN:
-                    {
-                        str += " G ";
-                        break;
-                    }
+                        {
+                            str += " G ";
+                            break;
+                        }
                     case PieceTypes.TYPE_NORMAL:
-                    {
-                        str += " N ";
-                        break;
-                    }
+                        {
+                            str += " N ";
+                            break;
+                        }
                     case PieceTypes.TYPE_NONE:
-                    {
-                        str += " - ";
-                        break;
-                    }
+                        {
+                            str += " - ";
+                            break;
+                        }
                     default:
                         break;
                 }
@@ -172,6 +174,5 @@ namespace GoldenButton
         }
 
         #endregion
-
     }
 }
